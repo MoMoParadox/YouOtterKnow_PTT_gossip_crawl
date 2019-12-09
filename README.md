@@ -14,25 +14,36 @@
 * linebot 提供 " 預設搜尋 " 以及 " 客製化搜尋 " 兩種服務 :
     * 預設搜尋 : 輸入 " 關鍵字 " 並回傳與標題相符之 5 筆最新文章 .
     * 客製化搜尋 : 設定 " 關鍵字 ", " 推文數量 " , " 顯示文章數量 " 做更進階的搜尋 .
-
+        * 推文數量 (-99 ~ +99)
+            * 推文數量 = 0 : 無視推噓文
+            * 推文數量 > 0 : 搜尋推文 
+            * 推文數量 < 0 : 搜尋噓文
+        * 顯示文章數量 (1 ~ 15)
 ### 搜尋流程
 
 ![flow](https://i.imgur.com/cGAhfnh.png)
 
-## Finite State Machine
+## 有限狀態機 Finite State Machine ( FSM )
 ![fsm](https://github.com/MoMoParadox/YouOtterKnow_PTT_gossip_crawl/blob/master/img/show-fsm.png?raw=true)
 
-## Usage
-The initial state is set to `user`.
+## FSM 說明
+* 初始狀態 `user`
+    * 輸出 "start" 即可開始 linebot 服務 .
+	* 正式進入 linebot 服務 , linebot會提供詳細用法 .
 
-Every time `user` state is triggered to `advance` to another state, it will always needs a condition to trigger for the transition.
+* 其他狀態說明: 正常程序使用者輸入都依照特定 condition 觸發 `advance` 的 transition.
+	* 例如: `default_search_keyword` 藉由 condition `get_keyword` 來觸發 `advance`.
+* `reset` 和 `go back`
+    * 在使用者可以輸入的狀態中, 這兩個指令可以讓你回到 user 以及 start 狀態 .
 
-* user
-	* 初始輸入: "start"
-		* 正式進入linebot服務 , linebot會提供詳細用法
+## 環境
+* Python 3.6
+* Pipenv
+* Heroku
+* HTTPS Server
+* Ubuntu  18.04.1
 
-	* 之後輸入: 按照指示輸入即可
-		* 請參考上圖
+# 以下環境安裝說明僅供參考用 非本人撰寫
 
 ## Setup
 
