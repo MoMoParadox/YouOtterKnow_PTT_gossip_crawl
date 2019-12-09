@@ -1,22 +1,45 @@
-# TOC Project 2020
+# YouOtterKnow PTT 八卦版爬蟲 LineBot
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/dc7fa47fcd809b99d087/maintainability)](https://codeclimate.com/github/NCKU-CCS/TOC-Project-2020/maintainability)
+## PTT 爬蟲 linebot 使用說明
+### 加入好友
+![id](https://i.imgur.com/unV8WmP.png)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020/badge.svg)](https://snyk.io/test/github/NCKU-CCS/TOC-Project-2020)
+### 初始狀態
+一開始加入 linebot 並不會顯示特別提示功能 ,
+必須輸入 "start" 方可開始使用本服務 , 接下來只要照著提示輸入即可 . ( 如下圖 )
 
+![id](https://i.imgur.com/nWL6YdM.png)
 
-Template Code for TOC Project 2020
+### 兩種服務
+* linebot 提供 " 預設搜尋 " 以及 " 客製化搜尋 " 兩種服務 :
+    * 預設搜尋 : 輸入 " 關鍵字 " 並回傳與標題相符之 5 筆最新文章 .
+    * 客製化搜尋 : 設定 " 關鍵字 ", " 推文數量 " , " 顯示文章數量 " 做更進階的搜尋 .
 
-A Line bot based on a finite state machine
+### 搜尋流程
 
-More details in the [Slides](https://hackmd.io/@TTW/ToC-2019-Project#) and [FAQ](https://hackmd.io/s/B1Xw7E8kN)
+![flow](https://i.imgur.com/cGAhfnh.png)
+
+## Finite State Machine
+![fsm](https://github.com/MoMoParadox/YouOtterKnow_PTT_gossip_crawl/blob/master/img/show-fsm.png?raw=true)
+
+## Usage
+The initial state is set to `user`.
+
+Every time `user` state is triggered to `advance` to another state, it will always needs a condition to trigger for the transition.
+
+* user
+	* 初始輸入: "start"
+		* 正式進入linebot服務 , linebot會提供詳細用法
+
+	* 之後輸入: 按照指示輸入即可
+		* 請參考上圖
 
 ## Setup
 
 ### Prerequisite
 * Python 3.6
 * Pipenv
-* Facebook Page and App
+* Heroku
 * HTTPS Server
 
 #### Install Dependency
@@ -34,73 +57,9 @@ pipenv shell
     * [Setup pygraphviz on Ubuntu](http://www.jianshu.com/p/a3da7ecc5303)
 	* [Note: macOS Install error](https://github.com/pygraphviz/pygraphviz/issues/100)
 
-
-#### Secret Data
-You should generate a `.env` file to set Environment Variables refer to our `.env.sample`.
-`LINE_CHANNEL_SECRET` and `LINE_CHANNEL_ACCESS_TOKEN` **MUST** be set to proper values.
-Otherwise, you might not be able to run your code.
-
-#### Run Locally
-You can either setup https server or using `ngrok` as a proxy.
-
-#### a. Ngrok installation
-* [ macOS, Windows, Linux](https://ngrok.com/download)
-
-or you can use Homebrew (MAC)
-```sh
-brew cask install ngrok
-```
-
-**`ngrok` would be used in the following instruction**
-
-```sh
-ngrok http 8000
-```
-
-After that, `ngrok` would generate a https URL.
-
-#### Run the sever
-
-```sh
-python3 app.py
-```
-
-#### b. Servo
-
-Or You can use [servo](http://serveo.net/) to expose local servers to the internet.
-
-
-## Finite State Machine
-![fsm](./img/show-fsm.png)
-
-## Usage
-The initial state is set to `user`.
-
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
-
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
-
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
-
 ## Deploy
 Setting to deploy webhooks on Heroku.
 
-### Heroku CLI installation
-
-* [macOS, Windows](https://devcenter.heroku.com/articles/heroku-cli)
-
-or you can use Homebrew (MAC)
-```sh
-brew tap heroku/brew && brew install heroku
-```
-
-or you can use Snap (Ubuntu 16+)
-```sh
-sudo snap install --classic heroku
-```
 
 ### Connect to Heroku
 
